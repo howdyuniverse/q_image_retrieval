@@ -18,7 +18,7 @@
 ![euclidean distance formula](/img/euclidean_distance_formula.png)
 
 
-#### Spectral correlation
+#### Spectral correlation (Pearson correlation coefficient)
 
 ![spectral correlation formula](/img/spectral_correlation_formula.png)
 
