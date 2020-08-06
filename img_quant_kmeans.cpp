@@ -42,7 +42,7 @@ public:
 	}
 	bool setCenter(word cluster_index, Color new_color, word pix_num)
 	{
-		// 0 - если установить новый цвет не удалось
+		// 0 - РµСЃР»Рё СѓСЃС‚Р°РЅРѕРІРёС‚СЊ РЅРѕРІС‹Р№ С†РІРµС‚ РЅРµ СѓРґР°Р»РѕСЃСЊ
 		if (cluster_index < 0 || cluster_index >= k_num)
 			return 0;
 		pix_nums[cluster_index] = pix_num;
@@ -65,7 +65,7 @@ public:
 	}
 	word getClusterNum(Color pixel)
 	{
-		// Определяем самый близкий кластер к данному пикселю
+		// РћРїСЂРµРґРµР»СЏРµРј СЃР°РјС‹Р№ Р±Р»РёР·РєРёР№ РєР»Р°СЃС‚РµСЂ Рє РґР°РЅРЅРѕРјСѓ РїРёРєСЃРµР»СЋ
 		word best_k = 0;
 		double dist = 0;
 		for (word i = 0; i < k_num; i++) {
@@ -77,7 +77,7 @@ public:
 	}
 	double getEDistance(Color a, Color b)
 	{
-		// Евклидово расстояние между 3 компонентами цвета
+		// Р•РІРєР»РёРґРѕРІРѕ СЂР°СЃСЃС‚РѕСЏРЅРёРµ РјРµР¶РґСѓ 3 РєРѕРјРїРѕРЅРµРЅС‚Р°РјРё С†РІРµС‚Р°
 		double dist = 0;
 		double d1 = static_cast<double>(a.comp1 - b.comp1);
 		double d2 = static_cast<double>(a.comp2 - b.comp2);
@@ -124,8 +124,8 @@ void getImgKmeansHist(char * img_file)
 
 	jpeg_start_decompress(&cinfo);
 	q = pBuf;
-	// заносим все компоненты пикселей в буфер
-	// используя указатель q
+	// Р·Р°РЅРѕСЃРёРј РІСЃРµ РєРѕРјРїРѕРЅРµРЅС‚С‹ РїРёРєСЃРµР»РµР№ РІ Р±СѓС„РµСЂ
+	// РёСЃРїРѕР»СЊР·СѓСЏ СѓРєР°Р·Р°С‚РµР»СЊ q
 	while (cinfo.output_scanline < cinfo.output_height)
 	{
 		jpeg_read_scanlines(&cinfo,(JSAMPARRAY)&(q),1);
@@ -152,16 +152,16 @@ void getImgKmeansHist(char * img_file)
 	while ( (moves != 0) || ( moves < moves_lim && iter > iter_lim ) )
 	{
 		moves = 0;
-		// проходимся по кластерам пересчитывая центры
+		// РїСЂРѕС…РѕРґРёРјСЃСЏ РїРѕ РєР»Р°СЃС‚РµСЂР°Рј РїРµСЂРµСЃС‡РёС‚С‹РІР°СЏ С†РµРЅС‚СЂС‹
 		for (word clust = 0; clust < k; clust++) {
 			//cout << "DEBUG> cluster iter" << endl;
-			unsigned int pixel_num = 0; // число пикселей входящих в кластер
-			unsigned int sum_comp1 = 0; // считаем сумму каждого компонента
-			unsigned int sum_comp2 = 0; // для вычисления сред.
+			unsigned int pixel_num = 0; // С‡РёСЃР»Рѕ РїРёРєСЃРµР»РµР№ РІС…РѕРґСЏС‰РёС… РІ РєР»Р°СЃС‚РµСЂ
+			unsigned int sum_comp1 = 0; // СЃС‡РёС‚Р°РµРј СЃСѓРјРјСѓ РєР°Р¶РґРѕРіРѕ РєРѕРјРїРѕРЅРµРЅС‚Р°
+			unsigned int sum_comp2 = 0; // РґР»СЏ РІС‹С‡РёСЃР»РµРЅРёСЏ СЃСЂРµРґ.
 			unsigned int sum_comp3 = 0;
 
-			// проходимся по всем цветам и смотрим по таблице индексов
-			// какому кластеру пренадлежит цвет
+			// РїСЂРѕС…РѕРґРёРјСЃСЏ РїРѕ РІСЃРµРј С†РІРµС‚Р°Рј Рё СЃРјРѕС‚СЂРёРј РїРѕ С‚Р°Р±Р»РёС†Рµ РёРЅРґРµРєСЃРѕРІ
+			// РєР°РєРѕРјСѓ РєР»Р°СЃС‚РµСЂСѓ РїСЂРµРЅР°РґР»РµР¶РёС‚ С†РІРµС‚
 			for (int comp = 0, j = 0; comp < stride * h; comp+=n, j++) {
 				if ( clust == index_table [j] ) {
 					pixel_num++;
@@ -170,7 +170,7 @@ void getImgKmeansHist(char * img_file)
 					sum_comp3 += pBuf [comp+2];
 				}
 			}
-			// пересчитываем центер кластера
+			// РїРµСЂРµСЃС‡РёС‚С‹РІР°РµРј С†РµРЅС‚РµСЂ РєР»Р°СЃС‚РµСЂР°
 			if (pixel_num != 0) {
 				Color avr_color;
 				avr_color.comp1 = word (sum_comp1 / pixel_num);
@@ -179,7 +179,7 @@ void getImgKmeansHist(char * img_file)
 				clusters.setCenter(clust, avr_color, pixel_num);
 			}
 		}
-		// ищем новый центр для кластера
+		// РёС‰РµРј РЅРѕРІС‹Р№ С†РµРЅС‚СЂ РґР»СЏ РєР»Р°СЃС‚РµСЂР°
 		Color tcolor;
 		for (int comp = 0, j = 0; comp < stride * h; comp+=n, j++) {
 			tcolor.comp1 = pBuf [comp];

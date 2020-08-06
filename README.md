@@ -1,6 +1,6 @@
 # Q Image Retrieval
 
-###### archived academic project that finds similar images using their histograms
+##### archived academic project that finds similar images using their histograms
 
 
 ![screenshot 1](/img/00.png)
@@ -8,7 +8,7 @@
 
 ### Methods to calculate distances between histograms
 
-#### histogram intersection
+#### Histogram intersection
 
 ![hist intersection formula](/img/hist_intersection_formula.png)
 
@@ -18,10 +18,10 @@
 ![euclidean distance formula](/img/euclidean_distance_formula.png)
 
 
-#### spectral correlation
+#### Spectral correlation
 
 ![spectral correlation formula](/img/spectral_correlation_formula.png)
 
 
 
-![screenshot 2](/img/00.png)
+![screenshot 2](/img/01.png)
